@@ -36,7 +36,7 @@ class CryptoObject {
   }
 
   _encryptText(plaintext) {
-    const cipher = crypto.createCipher(this.options.algorithm, this.options.password);
+    const cipher = crypto.createCipheriv(this.options.algorithm, this.options.password);
 
     let crypted = cipher.update(plaintext, 'utf8', 'hex');
     crypted += cipher.final('hex');
@@ -45,7 +45,7 @@ class CryptoObject {
   }
 
   _decryptText(ciphertext) {
-    const decipher = crypto.createDecipher(this.options.algorithm, this.options.password);
+    const decipher = crypto.createDecipheriv(this.options.algorithm, this.options.password);
 
     let dec = decipher.update(ciphertext, 'hex', 'utf8');
     dec += decipher.final('utf8');
