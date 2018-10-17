@@ -11,6 +11,10 @@ class CryptoObject {
     if (options.keys.length === 0) {
       throw new Error('No keys array provided');
     }
+    
+    if (options.iv) {
+      throw new Error('No iv provided');
+    }
 
     this.options = Object.assign({}, options, {
       algorithm: 'aes-256-ctr'
@@ -36,7 +40,7 @@ class CryptoObject {
   }
 
   _encryptText(plaintext) {
-    const cipher = crypto.createCipheriv(this.options.algorithm, this.options.password);
+    const cipher = crypto.createCipheriv(this.options.algorithm, this.options.password, this.options.iv);
 
     let crypted = cipher.update(plaintext, 'utf8', 'hex');
     crypted += cipher.final('hex');
@@ -45,7 +49,7 @@ class CryptoObject {
   }
 
   _decryptText(ciphertext) {
-    const decipher = crypto.createDecipheriv(this.options.algorithm, this.options.password);
+    const decipher = crypto.createDecipheriv(this.options.algorithm, this.options.password, this.options.iv);
 
     let dec = decipher.update(ciphertext, 'hex', 'utf8');
     dec += decipher.final('utf8');
