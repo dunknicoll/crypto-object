@@ -12,7 +12,7 @@ class CryptoObject {
       throw new Error('No keys array provided');
     }
     
-    if (options.iv) {
+    if (!options.iv) {
       throw new Error('No iv provided');
     }
 
